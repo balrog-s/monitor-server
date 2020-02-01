@@ -4,6 +4,7 @@
   "description": "A server for allowing users to check in and out quickly. Also provides logging of these events.",
   "main": "index.js",
   "scripts": {
+    "serve": "node index.js",
     "start": "npm run latest && node index.js",
     "latest": "knex migrate:latest",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,8 +12,12 @@
   "author": "Balraj Shah",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.0",
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "knex": "^0.20.8",
-    "pg": "^7.18.1"
+    "password-hash": "^1.2.2",
+    "pg": "^7.18.1",
+    "uuidv4": "^6.0.2"
   }
 }
