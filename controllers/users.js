@@ -1,11 +1,20 @@
 const userRepo = require('../repositories/users');
 const userSchema = require('../validation/users');
+const hash = require('password-hash');
+const jwt = require('jsonwebtoken');
 
 const eventLogger = require('./eventLogger');
 
+const privateKey = process.env.privateKey || 'foobar';
+
 const registerUser = (req, res, next) => {
-    const user = req.body;
+    const user = {
+        username: req.body.username,
+        password: hash.generate(req.body.password)
+    };
+
     const { error, value } = userSchema.validate(user);
+
     if (error) {
         console.log('Validation Error: ', {error});
         res.send(400, {error});
@@ -21,6 +30,21 @@ const registerUser = (req, res, next) => {
     .then(next);
 }
 
+const loginUser = (req, res, next) => {
+    const userCredentials = req.body;
+    return userRepo.getUserByUsername(userCredentials.username)
+    .then(user => {
+        if (hash.verify(userCredentials.password, user.password)) {
+            const token = jwt.sign(user, privateKey);
+            res.send(200, {token});
+            return next();
+        }
+        res.send(404);
+        return next();
+    });
+}
+
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 }

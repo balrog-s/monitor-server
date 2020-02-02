@@ -1,10 +1,8 @@
 var db = require('../db');
 var {uuid} = require('uuidv4');
-var hash = require('password-hash');
 
 const insertUser = user => {
     const id = uuid();
-    const password = hash.generate(user.password);
     const username = user.username;
 
     return db('users')
