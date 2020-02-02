@@ -13,7 +13,13 @@ const logEvent = (eventType, data) => {
 const getLastEventForUser = userId => {
     return eventsRepo.getLastEventForUser(userId);
 }
+
+const getEventsForUser = (userId, offset, limit) => {
+    return eventsRepo.getEventsForUser(userId, offset, limit);
+}
+
 module.exports = {
     logEvent,
     getLastEventForUser,
+    getEventsForUser,
 }

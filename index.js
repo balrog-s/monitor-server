@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 
 var userController = require('./controllers/users');
-var statusController = require('./controllers/status');
+var statusesController = require('./controllers/statuses');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,7 +17,8 @@ app.use(cors());
 
 app.post("/register", userController.registerUser);
 app.post("/login", userController.loginUser);
-app.post("/status", statusController.checkIn);
+app.post("/statuses", statusesController.newStatus);
+app.get("/history/:user_id", statusesController.getStatusHistoryForUser);
 
 app.listen(port, () => {
     console.log(`LISTENING ON ${port}`);
