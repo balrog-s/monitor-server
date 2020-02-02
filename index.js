@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var userController = require('./controllers/users');
 
@@ -11,6 +12,7 @@ app.get("/", function(req, res) {
 });
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.post("/register", userController.registerUser);
 
