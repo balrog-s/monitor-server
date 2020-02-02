@@ -1,4 +1,4 @@
-const events = require('./events');
+const eventsRepo = require('../repositories/events');
 const userRepo = require('../repositories/users');
 var jwt = require('jsonwebtoken');
 const R = require('ramda');
@@ -25,7 +25,7 @@ const newStatus = (req, res, next) => {
         res.status(400).send("Invalid status type");
         return next();
     }
-    return events.getLastEventForUser(user.id)
+    return eventsRepo.getLastEventForUser(user.id)
     .then(lastEvent => {
         if (lastEvent === undefined) {
             res.status(404).send("No user activity found.");
@@ -42,7 +42,7 @@ const newStatus = (req, res, next) => {
                 return next();
             }
         }
-        return events.logEvent(eventType, user)
+        return eventsRepo.insertEvent(eventType, user)
         .then(event => {
             res.status(200).send(event);
             return next();
@@ -61,7 +61,7 @@ const getStatusHistoryForUser = (req, res, next) => {
     if (user.id !== req.params.user_id) {
         res.status(403).send("You are not authorized to view this.");
     }
-    return events.getEventsForUser(req.params.user_id, offset, limit)
+    return eventsRepo.getEventsForUser(req.params.user_id, offset, limit)
     .then(events => {
         res.status(200).send({events: events});
         return next();
@@ -83,7 +83,7 @@ const getStatusHistoryForAllUsers = (req, res, next) => {
         }
         return user;
     })
-    .then(() => events.getEventsForAllUsers(offset, limit))
+    .then(() => eventsRepo.getEventsForAllUsers(offset, limit))
     .then(events => {
         res.status(200).send({events: events});
         return next();

@@ -1,6 +1,12 @@
-var db = require('../db');
+const db = require('../db');
+const {uuid} = require('uuidv4');
 
-const insertEvent = (event) => {
+const insertEvent = (eventType, data) => {
+    const event = {
+        id: uuid(),
+        event_type: eventType,
+        data
+    };
     return db('events')
     .insert(event)
     .returning('*');
