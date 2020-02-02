@@ -41,9 +41,10 @@ const loginUser = (req, res, next) => {
             return eventLogger.logEvent('USER_LOGGED_IN', R.omit(['password'], user));
         } else {
             res.send(404);
+            return userCredentials;
         }
-        return next();
-    });
+    })
+    .then(next);
 }
 
 module.exports = {
