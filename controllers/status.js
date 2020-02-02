@@ -7,8 +7,11 @@ const privateKey = process.env.privateKey || 'foobar';
 
 const checkIn = (req, res, next) => {
     const token = req.headers["authorization"].split(" ")[1];
+    console.log('token', token);
     const decodedToken = jwt.verify(token, privateKey);
+    console.log('decodedToken', decodedToken);
     const data = R.omit(['iat'], decodedToken);
+    console.log('data', data);
     return eventLogger.logEvent({
         id: uuid(),
         event_type: 'USER_CHECKED_IN',
