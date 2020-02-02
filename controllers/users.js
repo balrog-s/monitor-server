@@ -2,6 +2,7 @@ const userRepo = require('../repositories/users');
 const userSchema = require('../validation/users');
 const hash = require('password-hash');
 const jwt = require('jsonwebtoken');
+const R = require('ramda');
 
 const eventLogger = require('./eventLogger');
 
@@ -35,7 +36,7 @@ const loginUser = (req, res, next) => {
     return userRepo.getUserByUsername(userCredentials.username)
     .then(user => {
         if (hash.verify(userCredentials.password, user.password)) {
-            const token = jwt.sign(user, privateKey);
+            const token = jwt.sign(R.omit(['password'], user), privateKey);
             res.send(200, {token});
             return next();
         }
