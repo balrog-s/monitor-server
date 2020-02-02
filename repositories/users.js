@@ -13,7 +13,8 @@ const insertUser = user => {
         username,
         password
     })
-    .returning('*');
+    .returning('*')
+    .then(user => user[0]);
 }
 
 const getUserByUsername = username => {
