@@ -21,7 +21,14 @@ const getUserByUsername = username => {
     .where('username', username);
 }
 
+const getUserByUserId = userId => {
+    return db('users')
+    .first(['id', 'username'])
+    .where('id', id);
+}
+
 module.exports = {
     insertUser,
     getUserByUsername,
+    getUserByUserId,
 };
