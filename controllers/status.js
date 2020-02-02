@@ -22,12 +22,12 @@ const checkIn = (req, res, next) => {
     .then(lastEvent => {
         console.log(lastEvent);
         if (lastEvent.event_type === 'USER_CHECKED_IN') {
-            if (eventType !== 'checkout') {
+            if (eventType !== 'USER_CHECKED_OUT') {
                 res.status(400).send("You need to check out before you can check in again.");
                 return next();
             }
         } else if (lastEvent.event_type !== 'USER_CHECKED_IN') {
-            if (eventType !== 'checkin') {
+            if (eventType !== 'USER_CHECKED_IN') {
                 res.status(400).send("You need to check in before you can check out again.");
                 return next();
             }
