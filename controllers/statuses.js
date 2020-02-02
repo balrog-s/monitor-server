@@ -1,11 +1,10 @@
 const eventLogger = require('./eventLogger');
-var {uuid} = require('uuidv4');
 var jwt = require('jsonwebtoken');
 const R = require('ramda');
 
 const privateKey = process.env.privateKey || 'foobar';
 
-const checkIn = (req, res, next) => {
+const newStatus = (req, res, next) => {
     const token = req.headers["authorization"].split(" ")[1];
     const decodedToken = jwt.verify(token, privateKey);
     const data = R.omit(['iat'], decodedToken);
@@ -20,7 +19,6 @@ const checkIn = (req, res, next) => {
     }
     return eventLogger.getLastEventForUser(data.id)
     .then(lastEvent => {
-        console.log(lastEvent);
         if (lastEvent.event_type === 'USER_CHECKED_IN') {
             if (eventType !== 'USER_CHECKED_OUT') {
                 res.status(400).send("You need to check out before you can check in again.");
@@ -32,13 +30,31 @@ const checkIn = (req, res, next) => {
                 return next();
             }
         }
-        return eventLogger.logEvent(eventType, data).then(event => {
+        return eventLogger.logEvent(eventType, data)
+        .then(event => {
             res.status(200).send(event);
             return next();
         });
     });
 }
 
+const getStatusHistoryForUser = (req, res, next) => {
+    const token = req.headers["authorization"].split(" ")[1];
+    const decodedToken = jwt.verify(token, privateKey);
+    const data = R.omit(['iat'], decodedToken);
+    const offset = req.query.offset;
+    const limit = req.query.limit;
+    if (data.id !== req.params.user_id) {
+        res.status(403).send("You are not authorized to view this.");
+    }
+    return eventLogger.getEventsForUser(req.params.user_id, offset, limit)
+    .then(events => {
+        res.status(200).send({events: events});
+        return next();
+    })
+}
+
 module.exports = {
-    checkIn
+    newStatus,
+    getStatusHistoryForUser,
 }
