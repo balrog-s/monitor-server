@@ -1,8 +1,8 @@
 
 exports.up = function(knex) {
     return knex.raw(`
-        CREATE VIEW IF NOT EXISTS status_events AS (
-            select id, data->>"id" as user_id, event_type, created_at, updated_at FROM events order by created_at desc
+        CREATE OR REPLACE VIEW status_events AS (
+            select id, (data->>'id')::uuid as user_id, event_type, created_at, updated_at FROM events order by created_at desc
         );
     `);
 };
