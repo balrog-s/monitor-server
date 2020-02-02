@@ -24,7 +24,7 @@ const getUserByUsername = username => {
 const getUserByUserId = userId => {
     return db('users')
     .first(['id', 'username'])
-    .where('id', id);
+    .where('id', userId);
 }
 
 module.exports = {
