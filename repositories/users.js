@@ -4,7 +4,7 @@ var {uuid} = require('uuidv4');
 const insertUser = user => {
     const id = uuid();
     const username = user.username;
-
+    const password = user.password;
     return db('users')
     .insert({
         id,
