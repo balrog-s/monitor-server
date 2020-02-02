@@ -19,6 +19,7 @@ app.post("/register", userController.registerUser);
 app.post("/login", userController.loginUser);
 app.post("/statuses", statusesController.newStatus);
 app.get("/history/:user_id", statusesController.getStatusHistoryForUser);
+app.get("/history", statusesController.getStatusHistoryForAllUsers);
 
 app.listen(port, () => {
     console.log(`LISTENING ON ${port}`);
