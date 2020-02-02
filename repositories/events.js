@@ -16,7 +16,7 @@ const getLastStatusEventForUser = userId => {
     return db('status_events')
     .first('*')
     .where('user_id', userId)
-    .andWhereIn('event_type', ['USER_CHECKED_IN', 'USER_CHECKED_OUT'])
+    .whereIn('event_type', ['USER_CHECKED_IN', 'USER_CHECKED_OUT'])
     .orderBy('created_at', 'desc')
 }
 
