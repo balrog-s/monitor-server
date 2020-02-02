@@ -10,9 +10,9 @@ const checkIn = (req, res, next) => {
     const decodedToken = jwt.verify(token, privateKey);
     const data = R.omit(['iat'], decodedToken);
     let eventType;
-    if (req.query["type"] === 'checkin') {
+    if (req.body["type"] === 'checkin') {
         eventType = 'USER_CHECKED_IN';
-    } else if (req.query["type"] === 'checkout'){
+    } else if (req.body["type"] === 'checkout'){
         eventType = "USER_CHECKED_OUT";
     } else {
         res.status(400).send("Invalid status type");
