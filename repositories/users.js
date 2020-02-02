@@ -13,8 +13,7 @@ const insertUser = user => {
         username,
         password
     })
-    .returning('*')
-    .catch(() => user);
+    .returning('*');
 }
 
 const getUserByUsername = username => {
