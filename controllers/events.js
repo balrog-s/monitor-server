@@ -18,8 +18,13 @@ const getEventsForUser = (userId, offset, limit) => {
     return eventsRepo.getEventsForUser(userId, offset, limit);
 }
 
+const getEventsForAllUsers = (offset, limit) => {
+    return eventsRepo.getEventsForAllUsers(offset, limit);
+}
+
 module.exports = {
     logEvent,
     getLastEventForUser,
     getEventsForUser,
+    getEventsForAllUsers,
 }

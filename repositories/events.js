@@ -22,8 +22,17 @@ const getEventsForUser = (userId, offset, limit) => {
     .orderBy('created_at', 'desc')
 }
 
+const getEventsForAllUsers = (offset, limit) => {
+    return db('status_events')
+    .select('*')
+    .offset(offset)
+    .limit(limit)
+    .orderBy('created_at', 'desc');
+}
+
 module.exports = {
     insertEvent,
     getLastEventForUser,
     getEventsForUser,
+    getEventsForAllUsers,
 };
