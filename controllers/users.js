@@ -18,7 +18,7 @@ const registerUser = (req, res, next) => {
 
     if (error) {
         console.log('Validation Error: ', {error});
-        res.send(400, {error});
+        res.status(400).send({error});
         return next();
     }
     return userRepo.insertUser(value)
@@ -37,10 +37,10 @@ const loginUser = (req, res, next) => {
     .then(user => {
         if (hash.verify(userCredentials.password, user.password)) {
             const token = jwt.sign(R.omit(['password'], user), privateKey);
-            res.send(200, {token});
+            res.status(200).send({token});
             return eventLogger.logEvent('USER_LOGGED_IN', R.omit(['password'], user));
         } else {
-            res.send(404);
+            res.status(404);
             return userCredentials;
         }
     })
