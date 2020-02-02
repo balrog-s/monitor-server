@@ -1,5 +1,5 @@
-var db = require('../db');
-var {uuid} = require('uuidv4');
+const db = require('../db');
+const {uuid} = require('uuidv4');
 
 const insertUser = user => {
     const id = uuid();

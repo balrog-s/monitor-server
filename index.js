@@ -1,9 +1,9 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var cors = require('cors');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-var userController = require('./controllers/users');
-var statusesController = require('./controllers/statuses');
+const userController = require('./controllers/users');
+const statusesController = require('./controllers/statuses');
 
 const app = express();
 const port = process.env.PORT || 3000;
