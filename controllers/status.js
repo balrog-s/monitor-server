@@ -18,9 +18,24 @@ const checkIn = (req, res, next) => {
         res.status(400).send("Invalid status type");
         return next();
     }
-    return eventLogger.logEvent(eventType, data).then(event => {
-        res.status(200).send(event);
-        return next();
+    return eventLogger.getLastEventForUser(data.id)
+    .then(lastEvent => {
+        console.log(lastEvent);
+        if (lastEvent.event_type === 'USER_CHECKED_IN') {
+            if (eventType !== 'checkout') {
+                res.send(400, "You need to check out before you can check in again.");
+                return next();
+            }
+        } else if (lastEvent.event_type === 'USER_CHECKED_OUT' || !lastEvent) {
+            if (eventType !== 'checkin') {
+                res.send(400, "You need to check in before you can check out again.");
+                return next();
+            }
+        }
+        return eventLogger.logEvent(eventType, data).then(event => {
+            res.status(200).send(event);
+            return next();
+        });
     });
 }
 

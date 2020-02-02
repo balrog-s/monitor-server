@@ -10,6 +10,10 @@ const logEvent = (eventType, data) => {
     return eventsRepo.insertEvent(event);
 }
 
+const getLastEventForUser = userId => {
+    return eventsRepo.getLastEventForUser(userId);
+}
 module.exports = {
-    logEvent
+    logEvent,
+    getLastEventForUser,
 }
