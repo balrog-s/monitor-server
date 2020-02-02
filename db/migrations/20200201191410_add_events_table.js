@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
         return knex.schema.createTable('events', function (t) {
             t.uuid('id').notNull().unique();
             t.jsonb('data').notNull().unique();
-            t.string('event_type').enum(['USER_REGISTERED', 'USER_LOGGED_IN', 'USER_CHECKED_IN', 'USER_CHECKED_OUT']);
+            t.enu('event_type', ['USER_REGISTERED', 'USER_LOGGED_IN', 'USER_CHECKED_IN', 'USER_CHECKED_OUT']);
             t.timestamps(null, true);
         });
     });
