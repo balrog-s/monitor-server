@@ -30,7 +30,7 @@ const getEventsForUser = (userId, offset, limit) => {
 }
 
 const getEventsForAllUsers = (offset, limit) => {
-    return db('status_events')
+    return db('users_history')
     .select('*')
     .offset(offset)
     .limit(limit)
