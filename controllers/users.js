@@ -4,7 +4,7 @@ const hash = require('password-hash');
 const jwt = require('jsonwebtoken');
 const R = require('ramda');
 
-const eventLogger = require('./eventLogger');
+const events = require('./events');
 
 const privateKey = process.env.privateKey || 'foobar';
 
@@ -27,7 +27,7 @@ const registerUser = (req, res, next) => {
         res.status(200).send({user});
         return user;
     })
-    .then(user => eventLogger.logEvent('USER_REGISTERED', user))
+    .then(user => events.logEvent('USER_REGISTERED', user))
     .then(next);
 }
 
@@ -38,7 +38,7 @@ const loginUser = (req, res, next) => {
         if (hash.verify(userCredentials.password, user.password)) {
             const token = jwt.sign(R.omit(['password'], user), privateKey);
             res.status(200).send({token});
-            return eventLogger.logEvent('USER_LOGGED_IN', R.omit(['password'], user));
+            return events.logEvent('USER_LOGGED_IN', R.omit(['password'], user));
         } else {
             res.status(404);
             return userCredentials;

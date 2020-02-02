@@ -1,4 +1,4 @@
-const eventLogger = require('./eventLogger');
+const events = require('./events');
 var jwt = require('jsonwebtoken');
 const R = require('ramda');
 
@@ -17,9 +17,13 @@ const newStatus = (req, res, next) => {
         res.status(400).send("Invalid status type");
         return next();
     }
-    return eventLogger.getLastEventForUser(data.id)
+    return events.getLastEventForUser(data.id)
     .then(lastEvent => {
-        if (lastEvent.event_type === 'USER_CHECKED_IN') {
+        if (lastEvent === undefined) {
+            res.status(404).send("No user activity found.");
+            return next();
+        }
+        else if (lastEvent.event_type === 'USER_CHECKED_IN') {
             if (eventType !== 'USER_CHECKED_OUT') {
                 res.status(400).send("You need to check out before you can check in again.");
                 return next();
@@ -30,7 +34,7 @@ const newStatus = (req, res, next) => {
                 return next();
             }
         }
-        return eventLogger.logEvent(eventType, data)
+        return events.logEvent(eventType, data)
         .then(event => {
             res.status(200).send(event);
             return next();
@@ -47,7 +51,7 @@ const getStatusHistoryForUser = (req, res, next) => {
     if (data.id !== req.params.user_id) {
         res.status(403).send("You are not authorized to view this.");
     }
-    return eventLogger.getEventsForUser(req.params.user_id, offset, limit)
+    return events.getEventsForUser(req.params.user_id, offset, limit)
     .then(events => {
         res.status(200).send({events: events});
         return next();
