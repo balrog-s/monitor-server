@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.post("/register", userController.registerUser);
+app.post("/login", userController.loginUser);
 
 app.listen(port, () => {
     console.log(`LISTENING ON ${port}`);
