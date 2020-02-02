@@ -10,7 +10,9 @@ const privateKey = process.env.privateKey || 'foobar';
 const registerUser = (req, res, next) => {
     const user = {
         username: req.body.username,
-        password: hash.generate(req.body.password)
+        password: hash.generate(req.body.password),
+        first_name: req.body.firstname,
+        last_name: req.body.lastname
     };
 
     const { error, value } = userSchema.validate(user);

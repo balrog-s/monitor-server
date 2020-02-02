@@ -8,6 +8,8 @@ exports.up = function(knex, Promise) {
         return knex.schema.createTable('users', function (t) {
             t.uuid('id').notNull().unique();
             t.string('username').notNull().unique();
+            t.string('first_name').notNull();
+            t.string('last_name').notNull();
             t.string('password').notNull();
             t.timestamps(null, true);
         });
