@@ -4,7 +4,7 @@ var {uuid} = require('uuidv4');
 const privateKey = process.env.privateKey || 'foobar';
 
 const checkIn = (req, res, next) => {
-    const token = req.headers.token.split(" ")[1];
+    const token = req.headers["Authorization"].split(" ")[1];
     const decodedToken = jwt.verify(token, privateKey);
     console.log(decodedToken);
     res.status(200).send({user: decodedToken});
