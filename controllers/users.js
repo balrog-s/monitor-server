@@ -38,9 +38,10 @@ const loginUser = (req, res, next) => {
         if (hash.verify(userCredentials.password, user.password)) {
             const token = jwt.sign(R.omit(['password'], user), privateKey);
             res.send(200, {token});
-            return next();
+            return eventLogger.logEvent('USER_LOGGED_IN', R.omit(['password'], user));
+        } else {
+            res.send(404);
         }
-        res.send(404);
         return next();
     });
 }
