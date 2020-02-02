@@ -23,17 +23,17 @@ const newStatus = (req, res, next) => {
         return next();
     }
     const eventType = value.type;
-    return eventsRepo.getLastEventForUser(user.id)
+    return eventsRepo.getLastStatusEventForUser(user.id)
     .then(lastEvent => {
-        if (lastEvent === undefined) {
-            res.status(404).send("No user activity found.");
+        if (lastEvent === undefined && eventType !== 'USER_CHECKED_IN') {
+            res.status(400).send("You need to check in before you can check out.");
             return next();
         }
         else if (lastEvent.event_type === 'USER_CHECKED_IN' && eventType !== 'USER_CHECKED_OUT') {
-            res.status(400).send("You need to check out before you can check in again.");
+            res.status(400).send("You need to check out before you can check in.");
             return next();
-        } else if (lastEvent.event_type !== 'USER_CHECKED_IN' && eventType !== 'USER_CHECKED_IN') {
-            res.status(400).send("You need to check in before you can check out again.");
+        } else if ((lastEvent.event_type !== 'USER_CHECKED_IN' || lastEvent === undefined) && eventType !== 'USER_CHECKED_IN') {
+            res.status(400).send("You need to check in before you can check out.");
             return next();
         }
         return eventsRepo.insertEvent(eventType, user)

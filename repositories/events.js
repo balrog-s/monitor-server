@@ -12,10 +12,11 @@ const insertEvent = (eventType, data) => {
     .returning('*');
 }
 
-const getLastEventForUser = userId => {
+const getLastStatusEventForUser = userId => {
     return db('status_events')
     .first('*')
     .where('user_id', userId)
+    .andWhereIn('event_type', ['USER_CHECKED_IN', 'USER_CHECKED_OUT'])
     .orderBy('created_at', 'desc')
 }
 
@@ -38,7 +39,7 @@ const getEventsForAllUsers = (offset, limit) => {
 
 module.exports = {
     insertEvent,
-    getLastEventForUser,
+    getLastStatusEventForUser,
     getEventsForUser,
     getEventsForAllUsers,
 };
