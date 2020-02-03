@@ -4,7 +4,7 @@ const statusSchema = require('../validation/status');
 const jwt = require('jsonwebtoken');
 const R = require('ramda');
 
-const privateKey = process.env.privateKey || 'foobar';
+const privateKey = process.env.PRIVATE_KEY || 'foobar';
 
 //TODO: Move this fn to a utility file or part of route chain prior to hitting controller code
 const getUserFromToken = req => {

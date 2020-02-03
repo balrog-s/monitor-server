@@ -5,7 +5,7 @@ const hash = require('password-hash');
 const jwt = require('jsonwebtoken');
 const R = require('ramda');
 
-const privateKey = process.env.privateKey || 'foobar';
+const privateKey = process.env.PRIVATE_KEY || 'foobar';
 
 const registerUser = (req, res, next) => {
     const user = {
