@@ -28,7 +28,7 @@ const registerUser = (req, res, next) => {
         res.status(200).send({user});
         return user;
     })
-    .then(user => eventsRepo.insertEvent('USER_REGISTERED', user, user.id))
+    .then(user => eventsRepo.insertEvent('USER_REGISTERED', R.omit(['password'], user), user.id))
     .then(next);
 }
 
