@@ -39,7 +39,7 @@ const newStatus = (req, res, next) => {
                 return next();
             }
         }
-        return eventsRepo.insertEvent(eventType, user)
+        return eventsRepo.insertEvent(eventType, user, user.id)
         .then(event => {
             res.status(200).send(event);
             return next();

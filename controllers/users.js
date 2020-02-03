@@ -28,7 +28,7 @@ const registerUser = (req, res, next) => {
         res.status(200).send({user});
         return user;
     })
-    .then(user => eventsRepo.insertEvent('USER_REGISTERED', user))
+    .then(user => eventsRepo.insertEvent('USER_REGISTERED', user, user.id))
     .then(next);
 }
 
@@ -39,7 +39,7 @@ const loginUser = (req, res, next) => {
         if (hash.verify(userCredentials.password, user.password)) {
             const token = jwt.sign(R.omit(['password'], user), privateKey);
             res.status(200).send({token});
-            return eventsRepo.insertEvent('USER_LOGGED_IN', R.omit(['password'], user));
+            return eventsRepo.insertEvent('USER_LOGGED_IN', R.omit(['password'], user), user.id);
         } else {
             res.status(404);
             return userCredentials;
