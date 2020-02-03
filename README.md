@@ -75,12 +75,14 @@ The login system implemented uses a basic JWT implementation without any token e
 	- This is another aspect currently lacking; however given some time bringing in **Jest** to write out a unit test suite would greatly improve the quality of repository. Especially if refactoring is to be done.
 5. Developer Tools
 	- Adding a auto refresh service such as **nodemon** would make developing in this repository more efficient. As this was a quick prototype I did not invest some time in setting that up; however, if I were to do this again I would invest that time as it would probably save triple that during development.
+6. Pagination
+	- Clients are able to request the list of events along with a offset and limit parameter. However not providing these will return the whole data set. Currently the dashboard requests the whole data set as it does client side pagination.
 
 ## Given more time
 ### 1 Day
-Given one more day; I would install **Jest** and begin writing unit test files for the currently existing implementations. I would also need to investigate to find a good code coverage tool. Once I reach 97%+ unit test coverage I could begin refactoring some of the existing code and cleaning up the repository structure to allow easier implementation of new feature. For instance: A controller -> service -> db structure for resources. I would also add the USER_LOGGED_OUT event; its something I think that is worth having but did not have time to get to it.
+Given one more day; I would install **Jest** and begin writing unit test files for the currently existing implementations. I would also need to investigate to find a good code coverage tool. Once I reach 97%+ unit test coverage I could begin refactoring some of the existing code and cleaning up the repository structure to allow easier implementation of new feature. For instance: A controller -> service -> db structure for resources.
 ### 1 Month
 Given one month; I would do the above but also:
 	1. Implement a replay system for consuming events and generating projection tables
-	2. Improve the quality of error responses and also document a guideline on standards for returning data and errors. This could be done by documenting an OpenAPI 3.0 spec. Also, this may allow us to easily build up an integration test suite (althought I have not yet explored this but it would be a fun to look into)
+	2. Improve the quality of error responses and also document a guideline on standards for returning data and errors. This could be done by documenting an OpenAPI 3.0 spec. Also, this may allow us to easily build up an integration test suite (although I have not yet explored this but it would be a fun to look into)
 	3. Solidify the login system. In its current state it is a prototype at best and I am sure there are flaws with it. I would like to take some time to ensure that the system is as air tight as I can get it.
