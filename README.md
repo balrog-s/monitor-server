@@ -78,7 +78,7 @@ The login system implemented uses a basic JWT implementation without any token e
 
 ## Given more time
 ### 1 Day
-Given one more day; I would install **Jest** and begin writing unit test files for the currently existing implementations. I would also need to investigate to find a good code coverage tool. Once I reach 97%+ unit test coverage I could begin refactoring some of the existing code and cleaning up the repository structure to allow easier implementation of new feature. For instance: A controller -> service -> db structure for resources.
+Given one more day; I would install **Jest** and begin writing unit test files for the currently existing implementations. I would also need to investigate to find a good code coverage tool. Once I reach 97%+ unit test coverage I could begin refactoring some of the existing code and cleaning up the repository structure to allow easier implementation of new feature. For instance: A controller -> service -> db structure for resources. I would also add the USER_LOGGED_OUT event; its something I think that is worth having but did not have time to get to it.
 ### 1 Month
 Given one month; I would do the above but also:
 	1. Implement a replay system for consuming events and generating projection tables
